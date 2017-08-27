@@ -1,0 +1,31 @@
+{
+  "name": "raspberry-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"./node_modules/.bin/babel-node ./src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mmach/raspberry-project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mmach/raspberry-project/issues"
+  },
+  "homepage": "https://github.com/mmach/raspberry-project#readme",
+  "dependencies": {
+    "node-gyp": "^3.6.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-node6": "^11.0.0",
+    "core-js": "^2.5.0",
+    "es2015": "0.0.0",
+    "rpio": "^0.9.17"
+  }
+}

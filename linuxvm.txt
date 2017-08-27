@@ -1,0 +1,11 @@
+shared folder
+
+https://superuser.com/questions/938711/could-not-enter-folder-media-sf-test-trying-to-share-folder-between-kubuntu
+
+sudo usermod -aG vboxsf $(whoami)
+
+
+install nodejs
+https://askubuntu.com/questions/626383/node-package-manager-got-corrupted-in-some-way-now-it-cannot-be-installed
+
+
