@@ -1,5 +1,6 @@
 module.exports = {
     clockDiv :512,
+    Latency:200,
     ServoCAM:{
         X: {
             PIN:33,

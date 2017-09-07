@@ -1,7 +1,15 @@
 import { Servo } from './components/index.js'
 import rpio from 'rpio';
 import config from './config';
+import Koa  from 'koa';
+import cors from 'koa2-cors';
+import KoaRouter from 'koa-router';
+import koaBody  from 'koa-body';
 
+const app = new Koa();
+const router = new KoaRouter();
+const body = koaBody();
+//app.use(cors());
 
 rpio.init({
     gpiomem: false,
@@ -13,27 +21,38 @@ rpio.pwmSetClockDivider(config.clockDiv);
 
 
 let servoX = new Servo();
-servoX.init(config.ServoCAM.X);
 let servoY = new Servo();
-servoY.init(config.ServoCAM.Y);
 
-servoX.setAngle(128);
-servoX.setAngle(100);
-servoX.setAngle(0);
-servoX.setAngle(128);
-servoX.setAngle(60);
-servoY.setAngle(55);
-servoY.setAngle(110);
-servoY.setAngle(55);
-servoY.setAngle(110);
-servoY.setAngle(55);
-servoY.setAngle(110);
-servoY.setAngle(55);
-servoY.setAngle(110);
-servoY.setAngle(55);
-servoY.setAngle(110);
-servoY.setAngle(55);
-/*setTimeout(() => {
-    servoX.close.bind(servoX)();
-}, 10000)
-*/
+//servoX.setAngle(128);
+//servoY.setAngle(110);
+
+
+
+const raspServices = () => {
+    const initFunc = (ctx) => {
+        
+        servoX.init(config.ServoCAM.X);
+        servoY.init(config.ServoCAM.Y);
+        ctx.status = 200;
+        return ctx;
+    };
+
+   
+    return {
+        init: async (ctx) => {
+            return await initFunc(ctx);
+        },
+      
+
+    };
+};
+
+
+
+router.get('/init',  
+    raspServices().init
+  );
+app.use(router.routes());
+
+app.listen(3000);
+  
