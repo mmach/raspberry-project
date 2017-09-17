@@ -2,7 +2,7 @@ import rpio from 'rpio';
 import config from './../../config.js'
 export default class Servo {
 
-    consturctor() { }
+    constructor() { }
     init(configServo) {
         console.log("SERVO on PIN-" + configServo.PIN + " is turn on");
         this.PIN = configServo.PIN;
@@ -22,34 +22,33 @@ export default class Servo {
     setAngle(angle) {
         var direction = 0;
         var data = this.angle;
-        var speed =0; 
-        
-        if (this.angle > angle) {
+        var speed = 0;
+        if (angle > 0 && angle + this.angle < this.maxDegree) {
             direction = -1;
-            speed=config.Latency/(this.angle-angle)
+           // speed = config.Latency / (angle)
         }
-        else if (this.angle < angle) {
+        else if (0 < angle && this.angle + angle > this.minDegree) {
             direction = 1;
-            speed=config.Latency/(angle-this.angle)
+            //speed = config.Latency / (angle * (-1))
         } else {
             return;
         }
-        this.angle=angle;
+        this.angle = this.angle + angle;
+        console.log(this.PIN+"-"+this.angle);
         var that = this;
         //var pulse = setInterval(function () {
-        var pulse = setInterval(()=>{
-            if(pulse==that.angle){
-                console.log(that.PIN+"- closed");
-                clearInterval(pulse);
-            }
-            rpio.pwmSetData(this.PIN, data);
-            data += direction;
-           
-        },speed)  
-     
+        //   var pulse = setInterval(()=>{
+        //     if(data==that.angle){
+        //         console.log(that.PIN+"- closed");
+        //          clearInterval(pulse);
+        //      }
+        rpio.pwmSetData(this.PIN, this.angle);
+        //      data += direction;
+
+        //  },speed)  
+
     }
     close() {
-        console.log(this);
         console.log("SERVO on PIN-" + this.PIN + " is turn off");
         rpio.close(this.PIN)
     }
